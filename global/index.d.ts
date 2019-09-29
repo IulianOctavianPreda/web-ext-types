@@ -283,27 +283,40 @@ declare namespace browser.menus {
     wasChecked?: boolean;
   };
 
+  type CreateProperties = {
+    checked?: boolean;
+    command?: "_execute_browser_action" | "_execute_page_action" | "_execute_sidebar_action";
+    contexts?: browser.menus.ContextType[];
+    documentUrlPatterns?: string[];
+    enabled?: boolean;
+    icons?: object;
+    id?: string;
+    onclick?: (info: browser.menus.OnClickData, tab: browser.tabs.Tab) => void;
+    parentId?: number | string;
+    targetUrlPatterns?: string[];
+    title?: string;
+    type?: browser.menus.ItemType;
+    visible?: boolean;
+  };
+
+  type UpdateProperties = {
+    checked?: boolean;
+    command?: "_execute_browser_action" | "_execute_page_action" | "_execute_sidebar_action";
+    contexts?: browser.menus.ContextType[];
+    documentUrlPatterns?: string[];
+    enabled?: boolean;
+    onclick?: (info: browser.menus.OnClickData, tab: browser.tabs.Tab) => void;
+    parentId?: number | string;
+    targetUrlPatterns?: string[];
+    title?: string;
+    type?: browser.menus.ItemType;
+    visible?: boolean;
+  };
+
   const ACTION_MENU_TOP_LEVEL_LIMIT: number;
 
   function create(
-    createProperties: {
-      checked?: boolean;
-      command?:
-        | "_execute_browser_action"
-        | "_execute_page_action"
-        | "_execute_sidebar_action";
-      contexts?: ContextType[];
-      documentUrlPatterns?: string[];
-      enabled?: boolean;
-      icons?: object;
-      id?: string;
-      onclick?: (info: OnClickData, tab: browser.tabs.Tab) => void;
-      parentId?: number | string;
-      targetUrlPatterns?: string[];
-      title?: string;
-      type?: ItemType;
-      visible?: boolean;
-    },
+    createProperties: CreateProperties,
     callback?: () => void
   ): number | string;
 
@@ -317,22 +330,7 @@ declare namespace browser.menus {
 
   function update(
     id: number | string,
-    updateProperties: {
-      checked?: boolean;
-      command?:
-        | "_execute_browser_action"
-        | "_execute_page_action"
-        | "_execute_sidebar_action";
-      contexts?: ContextType[];
-      documentUrlPatterns?: string[];
-      enabled?: boolean;
-      onclick?: (info: OnClickData, tab: browser.tabs.Tab) => void;
-      parentId?: number | string;
-      targetUrlPatterns?: string[];
-      title?: string;
-      type?: ItemType;
-      visible?: boolean;
-    }
+    updateProperties: UpdateProperties
   ): Promise<void>;
 
   const onClicked: EvListener<
