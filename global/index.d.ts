@@ -65,15 +65,22 @@ declare namespace browser.bookmarks {
   function getSubTree(id: string): Promise<[BookmarkTreeNode]>;
   function getTree(): Promise<[BookmarkTreeNode]>;
 
-  type Destination =
-    | {
-        parentId: string;
-        index?: number;
-      }
-    | {
-        index: number;
+  type Destination = {
         parentId?: string;
-      };
+        index?: number;
+  };
+
+  type SearchQuery = {
+    query?: string;
+    url?: string;
+    title?: string;
+  }
+
+  type Changes = { 
+    title?: string; 
+    url?: string
+  }
+   
   function move(
     id: string,
     destination: Destination
@@ -83,15 +90,11 @@ declare namespace browser.bookmarks {
   function search(
     query:
       | string
-      | {
-          query?: string;
-          url?: string;
-          title?: string;
-        }
+      | SearchQuery
   ): Promise<BookmarkTreeNode[]>;
   function update(
     id: string,
-    changes: { title?: string; url?: string }
+    changes: Changes
   ): Promise<BookmarkTreeNode>;
 
   const onCreated: EvListener<(id: string, bookmark: BookmarkTreeNode) => void>;
